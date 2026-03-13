@@ -1,20 +1,61 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Script from "next/script";
 
-const googleAnalyticsId = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID?.trim();
-const clarityProjectId = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID?.trim();
-const shouldLoadAnalytics = process.env.NODE_ENV === "production";
+type RuntimeAnalyticsConfig = {
+  googleAnalyticsId: string | null;
+  clarityProjectId: string | null;
+};
+
+const emptyConfig: RuntimeAnalyticsConfig = {
+  googleAnalyticsId: null,
+  clarityProjectId: null,
+};
 
 export function Analytics() {
-  if (!shouldLoadAnalytics || (!googleAnalyticsId && !clarityProjectId)) {
+  const [config, setConfig] = useState<RuntimeAnalyticsConfig>(emptyConfig);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    if (process.env.NODE_ENV !== "production") {
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    void fetch("/api/runtime-config", { cache: "no-store" })
+      .then((response) => response.json() as Promise<RuntimeAnalyticsConfig>)
+      .then((data) => {
+        if (!cancelled) {
+          setConfig({
+            googleAnalyticsId: data.googleAnalyticsId || null,
+            clarityProjectId: data.clarityProjectId || null,
+          });
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setConfig(emptyConfig);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (!config.googleAnalyticsId && !config.clarityProjectId) {
     return null;
   }
 
   return (
     <>
-      {googleAnalyticsId ? (
+      {config.googleAnalyticsId ? (
         <>
           <Script
-            src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}
+            src={`https://www.googletagmanager.com/gtag/js?id=${config.googleAnalyticsId}`}
             strategy="afterInteractive"
           />
           <Script id="google-analytics" strategy="afterInteractive">
@@ -22,13 +63,13 @@ export function Analytics() {
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', '${googleAnalyticsId}', { anonymize_ip: true });
+              gtag('config', '${config.googleAnalyticsId}', { anonymize_ip: true });
             `}
           </Script>
         </>
       ) : null}
 
-      {clarityProjectId ? (
+      {config.clarityProjectId ? (
         <Script id="microsoft-clarity" strategy="afterInteractive">
           {`
             (function(c,l,a,r,i,t,y){
@@ -38,7 +79,7 @@ export function Analytics() {
               t.src="https://www.clarity.ms/tag/"+i;
               y=l.getElementsByTagName(r)[0];
               y.parentNode.insertBefore(t,y);
-            })(window, document, "clarity", "script", "${clarityProjectId}");
+            })(window, document, "clarity", "script", "${config.clarityProjectId}");
           `}
         </Script>
       ) : null}
