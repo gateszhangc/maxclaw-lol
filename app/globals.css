@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #f6f0e2;
+  --paper-strong: #fffdf7;
+  --ink: #121827;
+  --ink-soft: #20293d;
+  --muted: #5e6778;
+  --muted-strong: #323b4d;
+  --line: rgba(18, 24, 39, 0.1);
+  --line-strong: rgba(18, 24, 39, 0.2);
+  --signal: #c6ff4d;
+  --signal-soft: #d9ff86;
+  --electric: #28c1ff;
+}
+
+@theme inline {
+  --color-background: var(--paper);
+  --color-foreground: var(--ink);
+  --font-sans: var(--font-body);
+  --font-display: var(--font-heading);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body), sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.font-display {
+  font-family: var(--font-heading), sans-serif;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.grid-overlay {
+  background-image: linear-gradient(rgba(18, 24, 39, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(18, 24, 39, 0.03) 1px, transparent 1px);
+  background-position: center center;
+  background-size: 48px 48px;
+  mask-image: radial-gradient(circle at center, black 45%, transparent 92%);
+}
+
+.summary-reset {
+  list-style: none;
+}
+
+.summary-reset::-webkit-details-marker {
+  display: none;
+}
+
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+@theme inline {
+  --animate-accordion-down: accordion-down 0.24s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+}
+
+@media (max-width: 640px) {
+  .grid-overlay {
+    background-size: 34px 34px;
+  }
+}
