@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
 
+const expectedClarityProjectId = process.env.PLAYWRIGHT_EXPECT_CLARITY_PROJECT_ID || null;
+
 const pages = [
   { path: "/claw-ecosystem", title: "The Claw Ecosystem: where MaxClaw fits in 2026" },
   { path: "/maxclaw-vs-openclaw", title: "MaxClaw vs OpenClaw: managed cloud versus self-hosted control" },
@@ -121,4 +123,32 @@ test("launch status CTA and footer links remain reachable", async ({ page }) => 
 
   await page.getByRole("link", { name: "Homepage" }).click();
   await expect(page).toHaveURL("/");
+});
+
+test("runtime analytics config matches the deployed environment", async ({ page, request }) => {
+  const response = await request.get("/api/runtime-config");
+  expect(response.ok()).toBeTruthy();
+
+  const config = (await response.json()) as {
+    googleAnalyticsId: string | null;
+    clarityProjectId: string | null;
+  };
+
+  if (expectedClarityProjectId) {
+    expect(config.clarityProjectId).toBe(expectedClarityProjectId);
+  } else {
+    expect(config.clarityProjectId).toBeNull();
+  }
+
+  await page.goto("/");
+
+  if (expectedClarityProjectId) {
+    const script = page.locator("script#microsoft-clarity");
+    await expect(script).toHaveCount(1);
+    await expect
+      .poll(async () => (await script.textContent()) || "")
+      .toContain(expectedClarityProjectId);
+  } else {
+    await expect(page.locator("script#microsoft-clarity")).toHaveCount(0);
+  }
 });
