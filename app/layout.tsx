@@ -4,6 +4,8 @@ import "./globals.css";
 import { siteConfig } from "@/lib/site-content";
 import { Analytics } from "@/components/marketing/analytics";
 
+const brandIconVersion = "20260314";
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   applicationName: siteConfig.name,
@@ -60,9 +62,12 @@ export const metadata: Metadata = {
     ],
   },
   icons: {
-    icon: [{ url: "/icon.svg", type: "image/svg+xml" }, { url: "/favicon.ico" }],
-    shortcut: ["/favicon.ico"],
-    apple: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    icon: [
+      { url: `/icon.svg?v=${brandIconVersion}`, type: "image/svg+xml" },
+      { url: `/favicon.ico?v=${brandIconVersion}` },
+    ],
+    shortcut: [`/favicon.ico?v=${brandIconVersion}`],
+    apple: [{ url: `/icon.svg?v=${brandIconVersion}`, type: "image/svg+xml" }],
   },
 };
 

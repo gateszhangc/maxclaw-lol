@@ -13,7 +13,7 @@ const pages = [
   { path: "/get-started", title: "MaxClaw launch status" },
 ];
 
-test("homepage renders key sections and metadata", async ({ page }) => {
+test("homepage renders key sections and metadata", async ({ page, request }) => {
   await page.goto("/");
 
   await expect(page.locator("[data-testid='hero-title']")).toBeVisible();
@@ -54,6 +54,23 @@ test("homepage renders key sections and metadata", async ({ page }) => {
     "content",
     /MaxClaw AI agent homepage/,
   );
+  await expect(page.locator("header a[href='/']")).toContainText("MX");
+  await expect(page.locator("link[rel='icon'][type='image/svg+xml']")).toHaveAttribute(
+    "href",
+    /\/icon\.svg\?v=20260314$/,
+  );
+  await expect(page.locator("link[href*='favicon.ico']").first()).toHaveAttribute(
+    "href",
+    /\/favicon\.ico\?v=20260314$/,
+  );
+
+  const iconResponse = await request.get("/icon.svg");
+  expect(iconResponse.ok()).toBeTruthy();
+  expect(await iconResponse.text()).toContain("MX");
+
+  const faviconResponse = await request.get("/favicon.ico");
+  expect(faviconResponse.ok()).toBeTruthy();
+  expect(faviconResponse.headers()["content-type"]).toContain("image/x-icon");
 
   const ldJson = page.locator("script[type='application/ld+json']");
   await expect(ldJson).toHaveCount(1);

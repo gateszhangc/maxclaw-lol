@@ -2,6 +2,8 @@ import type { MetadataRoute } from "next";
 
 import { siteConfig } from "@/lib/site-content";
 
+const brandIconVersion = "20260314";
+
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: siteConfig.name,
@@ -13,12 +15,12 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: "#121827",
     icons: [
       {
-        src: "/icon.svg",
+        src: `/icon.svg?v=${brandIconVersion}`,
         sizes: "any",
         type: "image/svg+xml",
       },
       {
-        src: "/favicon.ico",
+        src: `/favicon.ico?v=${brandIconVersion}`,
         sizes: "48x48",
         type: "image/x-icon",
       },
