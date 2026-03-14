@@ -29,6 +29,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description: page.description,
     keywords: [
       "MaxClaw",
+      "MaxClaw AI agent",
+      "MiniMax cloud agent",
       page.shortTitle,
       ...(page.comparisonTarget ? [`MaxClaw vs ${page.comparisonTarget}`] : []),
     ],
@@ -40,13 +42,24 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: page.description,
       url: `/${page.slug}`,
       type: "article",
-      images: [`/${page.slug}/opengraph-image`],
+      siteName: siteConfig.name,
+      images: [
+        {
+          url: `/${page.slug}/opengraph-image`,
+          alt: `${page.title} on MaxClaw`,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: page.title,
       description: page.description,
-      images: [`/${page.slug}/twitter-image`],
+      images: [
+        {
+          url: `/${page.slug}/twitter-image`,
+          alt: `${page.title} on MaxClaw`,
+        },
+      ],
     },
     category: siteConfig.name,
   };

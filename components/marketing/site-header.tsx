@@ -69,7 +69,7 @@ export function SiteHeader({ currentPath }: SiteHeaderProps) {
 
         <div className="flex items-center gap-2">
           <Button asChild variant="signal" size="sm" className="hidden md:inline-flex">
-            <Link href={siteConfig.ctaPath}>Launch Status</Link>
+            <a href={siteConfig.launchStatusUrl}>Launch Status</a>
           </Button>
 
           <details className="relative lg:hidden">
@@ -91,7 +91,7 @@ export function SiteHeader({ currentPath }: SiteHeaderProps) {
               </div>
               <div className="mt-3">
                 <Button asChild variant="signal" className="w-full">
-                  <Link href={siteConfig.ctaPath}>Launch Status</Link>
+                  <a href={siteConfig.launchStatusUrl}>Launch Status</a>
                 </Button>
               </div>
             </div>

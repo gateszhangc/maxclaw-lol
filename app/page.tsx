@@ -4,26 +4,36 @@ import { HomePage } from "@/components/marketing/home-page";
 import { siteConfig } from "@/lib/site-content";
 
 export const metadata: Metadata = {
-  title: "MaxClaw | Cloud-hosted AI agent by MiniMax",
+  title: "What Is MaxClaw? MiniMax cloud AI agent overview",
   description:
-    "MaxClaw is the cloud-hosted AI agent by MiniMax. Learn what MaxClaw does, how it compares with other Claw projects, and why MiniMax M2.5 powers its launch story.",
+    "Learn what MaxClaw is, how the MiniMax cloud AI agent works, which MaxClaw features matter most, and how MaxClaw compares with OpenClaw and other Claw projects.",
   keywords: siteConfig.keywords,
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "MaxClaw | Cloud-hosted AI agent by MiniMax",
+    title: "What Is MaxClaw? MiniMax cloud AI agent overview",
     description:
-      "Learn what MaxClaw does, where it fits in the Claw ecosystem, and how MiniMax M2.5 powers the product story.",
+      "Understand what MaxClaw is, where it fits in the Claw ecosystem, and why MiniMax M2.5 powers the MaxClaw story.",
     url: "/",
-    images: [siteConfig.socialImagePath],
+    images: [
+      {
+        url: siteConfig.socialImagePath,
+        alt: "MaxClaw AI agent homepage",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "MaxClaw | Cloud-hosted AI agent by MiniMax",
+    title: "What Is MaxClaw? MiniMax cloud AI agent overview",
     description:
-      "Learn what MaxClaw does, where it fits in the Claw ecosystem, and how MiniMax M2.5 powers the product story.",
-    images: [siteConfig.socialImagePath],
+      "Understand what MaxClaw is, where it fits in the Claw ecosystem, and why MiniMax M2.5 powers the MaxClaw story.",
+    images: [
+      {
+        url: siteConfig.socialImagePath,
+        alt: "MaxClaw AI agent homepage",
+      },
+    ],
   },
 };
 

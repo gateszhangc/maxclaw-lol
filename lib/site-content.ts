@@ -69,21 +69,27 @@ export const siteConfig = {
   projectName: process.env.NEXT_PUBLIC_PROJECT_NAME?.trim() || "maxclaw-lol",
   organizationName: "MiniMax",
   authorName: "MaxClaw Editorial Team",
-  tagline: "Cloud-hosted AI agent by MiniMax",
+  tagline: "Cloud AI agent by MiniMax for zero-ops deployment",
   description:
-    "MaxClaw is the cloud-hosted AI agent by MiniMax. Explore features, deployment guidance, ecosystem comparisons, and the MiniMax M2.5 model that powers it.",
+    "MaxClaw is the cloud AI agent by MiniMax for zero-ops deployment. Learn what MaxClaw is, how it works, which teams it fits, and how MaxClaw compares with OpenClaw and the broader Claw ecosystem.",
   url: siteUrl,
   socialImagePath: "/opengraph-image",
   keywords: [
     "MaxClaw",
+    "MaxClaw AI agent",
+    "what is MaxClaw",
     "MiniMax MaxClaw",
+    "MiniMax AI agent",
     "cloud AI agent",
+    "MaxClaw deployment",
+    "MaxClaw features",
     "OpenClaw alternative",
     "MiniMax M2.5",
     "AI agent deployment",
     "MaxClaw vs OpenClaw",
   ],
   ctaPath: "/get-started",
+  launchStatusUrl: "https://www.easyclaw.pro",
 };
 
 export const headerLinks: NavLink[] = [
@@ -205,6 +211,27 @@ export const heroStats: Stat[] = [
     label: "Channel fit",
     value: "TG / DC / Slack",
     detail: "MaxClaw is framed as living inside the communication tools teams already use.",
+  },
+];
+
+export const searchIntentCards: CardItem[] = [
+  {
+    title: "What MaxClaw is",
+    description:
+      "MaxClaw is presented as a cloud-hosted AI agent by MiniMax, built for teams that want agent behavior without self-hosting the stack.",
+    tag: "Definition",
+  },
+  {
+    title: "Why people evaluate MaxClaw",
+    description:
+      "Search intent usually centers on fast deployment, long-context memory, messaging-native operation, and whether MaxClaw can replace a heavier setup.",
+    tag: "Search intent",
+  },
+  {
+    title: "What to compare next",
+    description:
+      "Most buyers immediately compare MaxClaw with OpenClaw and adjacent Claw variants to understand the convenience-versus-control trade-off.",
+    tag: "Comparison",
   },
 ];
 
@@ -382,6 +409,11 @@ export const homeFaqs: FaqItem[] = [
     question: "What is MaxClaw?",
     answer:
       "MaxClaw is positioned as the cloud-hosted AI agent built by MiniMax on top of the broader OpenClaw movement. The pitch is simple: keep the tool-using agent behavior, remove the infrastructure burden.",
+  },
+  {
+    question: "What is MaxClaw used for?",
+    answer:
+      "MaxClaw is aimed at teams that want a persistent AI agent for research, monitoring, messaging-native workflows, and always-on automation without maintaining a self-hosted runtime.",
   },
   {
     question: "What model powers MaxClaw?",

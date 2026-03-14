@@ -6,10 +6,10 @@ import { Analytics } from "@/components/marketing/analytics";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
-  applicationName: siteConfig.projectName,
+  applicationName: siteConfig.name,
   referrer: "origin-when-cross-origin",
   title: {
-    default: "MaxClaw | Cloud-hosted AI agent by MiniMax",
+    default: "MaxClaw AI Agent | MiniMax cloud deployment and comparisons",
     template: "%s | MaxClaw",
   },
   description: siteConfig.description,
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "MaxClaw | Cloud-hosted AI agent by MiniMax",
+    title: "MaxClaw AI Agent | MiniMax cloud deployment and comparisons",
     description: siteConfig.description,
     url: siteConfig.url,
     siteName: "MaxClaw",
@@ -50,9 +50,14 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "MaxClaw | Cloud-hosted AI agent by MiniMax",
+    title: "MaxClaw AI Agent | MiniMax cloud deployment and comparisons",
     description: siteConfig.description,
-    images: [siteConfig.socialImagePath],
+    images: [
+      {
+        url: siteConfig.socialImagePath,
+        alt: "MaxClaw AI agent overview",
+      },
+    ],
   },
   icons: {
     icon: [{ url: "/icon.svg", type: "image/svg+xml" }, { url: "/favicon.ico" }],

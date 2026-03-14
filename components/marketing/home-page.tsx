@@ -9,6 +9,7 @@ import {
   homeComparisonRows,
   homeFaqs,
   pillarCards,
+  searchIntentCards,
   siteConfig,
   siteUrl,
   technologyCards,
@@ -27,9 +28,19 @@ export function HomePage() {
     "@type": "SoftwareApplication",
     name: "MaxClaw",
     applicationCategory: "AI Agent Platform",
+    applicationSubCategory: "Cloud AI agent",
     operatingSystem: "Cloud (Web-based)",
     url: siteUrl,
     description: siteConfig.description,
+    image: `${siteUrl}${siteConfig.socialImagePath}`,
+    brand: {
+      "@type": "Brand",
+      name: siteConfig.name,
+    },
+    creator: {
+      "@type": "Organization",
+      name: siteConfig.organizationName,
+    },
     offers: {
       "@type": "Offer",
       price: "0",
@@ -45,6 +56,7 @@ export function HomePage() {
     name: siteConfig.organizationName,
     url: siteUrl,
     description: "MiniMax is the company behind MaxClaw and the MiniMax M2.5 model line.",
+    brand: siteConfig.name,
   };
 
   const websiteData = {
@@ -54,9 +66,30 @@ export function HomePage() {
     url: siteUrl,
     description: siteConfig.description,
     inLanguage: "en-US",
+    about: siteConfig.keywords.slice(0, 6),
     publisher: {
       "@type": "Organization",
       name: siteConfig.organizationName,
+    },
+  };
+
+  const webPageData = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "What is MaxClaw?",
+    url: siteUrl,
+    description: siteConfig.description,
+    about: [
+      "MaxClaw",
+      "MiniMax",
+      "cloud AI agent",
+      "OpenClaw alternative",
+    ],
+    primaryImageOfPage: `${siteUrl}${siteConfig.socialImagePath}`,
+    isPartOf: {
+      "@type": "WebSite",
+      name: siteConfig.name,
+      url: siteUrl,
     },
   };
 
@@ -75,7 +108,7 @@ export function HomePage() {
 
   return (
     <PageShell currentPath="/">
-      <StructuredData data={[websiteData, organizationData, softwareAppData, faqData]} />
+      <StructuredData data={[websiteData, webPageData, organizationData, softwareAppData, faqData]} />
 
       <section className="mx-auto flex w-[min(1180px,calc(100%-1.5rem))] flex-col gap-8 pb-12 pt-12 md:gap-12 md:pt-18">
         <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
@@ -89,22 +122,21 @@ export function HomePage() {
               className="mt-6 max-w-4xl text-balance font-display text-5xl font-semibold tracking-[-0.07em] text-[var(--ink)] md:text-7xl"
               data-testid="hero-title"
             >
-              MaxClaw turns the Claw ecosystem into a zero-ops command center.
+              MaxClaw is MiniMax&apos;s cloud AI agent for zero-ops deployment.
             </h1>
 
             <p className="mt-6 max-w-3xl text-base leading-8 text-[var(--muted)] md:text-lg">
-              MaxClaw is the cloud-hosted AI agent positioned by MiniMax as the fastest way to
-              deploy a persistent, tool-using agent without running your own stack. Built on the
-              Claw ecosystem and powered by MiniMax M2.5, it is framed around rapid deployment,
-              long-term memory, and messaging-native operation.
+              Use this MaxClaw guide to understand what the product is, how the MiniMax cloud AI
+              agent works, why teams evaluate it against OpenClaw, and which capabilities make
+              MaxClaw relevant for always-on, messaging-native workflows.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild variant="signal" size="lg">
-                <Link href={siteConfig.ctaPath} data-testid="primary-cta">
+                <a href={siteConfig.launchStatusUrl} data-testid="primary-cta">
                   Launch Status
                   <ArrowRight className="size-4" />
-                </Link>
+                </a>
               </Button>
               <Button asChild variant="outline" size="lg">
                 <Link href="/claw-ecosystem">Explore Ecosystem</Link>
@@ -174,6 +206,39 @@ export function HomePage() {
             </div>
           </div>
         </div>
+
+        <section
+          className="grid gap-5 rounded-[40px] border border-[color:var(--line)] bg-white/72 p-7 shadow-[0_24px_80px_rgba(18,24,39,0.08)] backdrop-blur-sm md:p-10"
+          data-testid="search-intent-section"
+        >
+          <div className="max-w-3xl space-y-3">
+            <div className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
+              What is MaxClaw?
+            </div>
+            <h2 className="font-display text-4xl font-semibold tracking-[-0.05em] text-[var(--ink)] md:text-5xl">
+              The shortest useful answer for someone searching MaxClaw
+            </h2>
+            <p className="text-base leading-8 text-[var(--muted)]">
+              MaxClaw is a cloud AI agent from MiniMax. The search intent around MaxClaw usually
+              comes down to three questions: what it is, why teams compare it with OpenClaw, and
+              whether the managed cloud model is worth the trade-off.
+            </p>
+          </div>
+
+          <div className="grid gap-5 md:grid-cols-3">
+            {searchIntentCards.map((card) => (
+              <Card key={card.title} className="h-full">
+                <CardHeader>
+                  {card.tag ? <Badge variant="outline">{card.tag}</Badge> : null}
+                  <CardTitle>{card.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm leading-7 text-[var(--muted)]">{card.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
 
         <section id="features" className="grid gap-5" data-testid="features-section">
           <div className="max-w-3xl space-y-3">

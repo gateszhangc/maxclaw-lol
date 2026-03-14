@@ -15,16 +15,22 @@ test("homepage renders key sections and metadata", async ({ page }) => {
   await page.goto("/");
 
   await expect(page.locator("[data-testid='hero-title']")).toBeVisible();
+  await expect(page.locator("[data-testid='search-intent-section']")).toBeVisible();
   await expect(page.locator("[data-testid='primary-cta']")).toBeVisible();
   await expect(page.locator("[data-testid='features-section']")).toBeVisible();
   await expect(page.locator("[data-testid='faq-section']")).toBeVisible();
-  await expect(page).toHaveTitle(/MaxClaw/);
+  await expect(page).toHaveTitle(/What Is MaxClaw\?/);
 
   const canonical = page.locator("link[rel='canonical']");
   await expect(canonical).toHaveAttribute("href", /^https:\/\/maxclaw\.lol\/?$/);
 
   const description = page.locator("meta[name='description']");
-  await expect(description).toHaveAttribute("content", /cloud-hosted AI agent/i);
+  await expect(description).toHaveAttribute("content", /what MaxClaw is/i);
+
+  await expect(page.locator("meta[name='application-name']")).toHaveAttribute(
+    "content",
+    "MaxClaw",
+  );
 
   await expect(page.locator("link[rel='manifest']")).toHaveAttribute(
     "href",
@@ -38,6 +44,14 @@ test("homepage renders key sections and metadata", async ({ page }) => {
     "content",
     "summary_large_image",
   );
+  await expect(page.locator("meta[property='og:image:alt']")).toHaveAttribute(
+    "content",
+    /MaxClaw AI agent homepage/,
+  );
+  await expect(page.locator("meta[name='twitter:image:alt']")).toHaveAttribute(
+    "content",
+    /MaxClaw AI agent homepage/,
+  );
 
   const ldJson = page.locator("script[type='application/ld+json']");
   await expect(ldJson).toHaveCount(1);
@@ -45,6 +59,7 @@ test("homepage renders key sections and metadata", async ({ page }) => {
   expect(schemaText).toContain("SoftwareApplication");
   expect(schemaText).toContain("FAQPage");
   expect(schemaText).toContain("WebSite");
+  expect(schemaText).toContain("WebPage");
   expect(schemaText).toContain("Organization");
 });
 
@@ -94,8 +109,15 @@ test("mobile viewport keeps layout usable and avoids horizontal page overflow", 
 
 test("launch status CTA and footer links remain reachable", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("link", { name: "Launch Status" }).first().click();
-  await expect(page).toHaveURL("/get-started");
+
+  await expect(page.locator("[data-testid='primary-cta']")).toHaveAttribute(
+    "href",
+    "https://www.easyclaw.pro",
+  );
+
+  await expect(
+    page.locator("header a[href='https://www.easyclaw.pro']").filter({ hasText: "Launch Status" }),
+  ).toHaveCount(2);
 
   await page.getByRole("link", { name: "Homepage" }).click();
   await expect(page).toHaveURL("/");
